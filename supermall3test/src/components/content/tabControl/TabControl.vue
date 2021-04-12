@@ -25,6 +25,7 @@
     methods: {
       itemClick(index) {
         this.itemIndex = index
+        this.$emit("itemClick",index)
       }
     }
   }

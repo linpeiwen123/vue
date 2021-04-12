@@ -1,6 +1,6 @@
 <template>
-  <div class="goods-item">
-    <img :src="goodsItem.show.img"/>
+  <div class="goods-item" @click="goodsItemFun">
+    <img :src="goodsItem.show.img" @load="imgLoad"/>
     <div class="goods-info">
       <p>{{goodsItem.title}}</p>
       <span class="price">{{goodsItem.price}}</span>
@@ -17,6 +17,22 @@
       default() {
         return {}
       }
+    },
+    //load图片加载完执行的方法
+    methods:{
+      imgLoad(){
+        // 使用$bus.$emit将方法发射到home
+        this.$bus.$emit("imgLoad")
+      },
+      goodsItemFun(){
+        // this.$router.push("/detail/"+this.goodsItem.iid)
+        this.$router.push({
+          path:"/detail",
+          query:{
+            iid:this.goodsItem.iid
+          }
+        })
+      }
     }
   }
 </script>
@@ -24,10 +40,8 @@
 <style scoped>
   .goods-item {
     width: 48%;
-    float: left;
     padding-bottom: 40px;
     position: relative;
-    margin-left: 1.2%;
   }
 
   .goods-item img {

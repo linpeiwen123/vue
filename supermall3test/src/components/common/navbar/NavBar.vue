@@ -29,6 +29,7 @@
 
   .left, .right {
     width: 60px;
+    line-height: 50px;
   }
 
   .center {

@@ -15,3 +15,13 @@ export function getHomeGoods(type,page) {
     }
   })
 }
+
+export function getDetailGoods(iid) {
+  return request({
+    url: '/detail',
+    params: {
+      iid,
+    }
+  })
+}
+
