@@ -30,8 +30,9 @@
   import TabControl from "../../components/content/tabControl/TabControl";
   import GoodsList from "../../components/content/goods/GoodsList";
   import Scroll from "../../components/common/scroll/Scroll";
-  import BackTop from "../../components/content/backTop/BackTop";
+  // import BackTop from "../../components/content/backTop/BackTop";
   import {debounce} from "../../common/utils";
+  import {itemListenerMixin,backTopMixin} from "../../common/mixin";
 
   export default {
     name: "Home",
@@ -47,7 +48,7 @@
           'sell': {page: 0, list: []}
         },
         currentType: "pop",//定义变量list值
-        backTopFlag: false,
+        // backTopFlag: false,
         tabControlTop: 0,
         isTabFixed: false,
         saveY: 0
@@ -62,11 +63,14 @@
     // 组件切换时候执行的方法，与keep-alive结合使用
     deactivated() {
       //获取此时y轴的位置
-      // this.saveY = this.$refs.betscroll.scroll.y
-      this.saveY = this.$refs.betscroll.getScrollY()
+      this.saveY = this.$refs.betscroll.scroll.y
+      // this.saveY = this.$refs.betscroll.getScrollY()
+      // console.log("deactivated"+ this.saveY)
+      // this.$bus.$off("imgLoad")
     },
     // 组件切换进来时的状态
     activated() {
+      // console.log("activated"+ this.saveY)
       this.$refs.betscroll.scroll.refresh()
       this.$refs.betscroll.scroll.scrollTo(0, this.saveY, 1)
     },
@@ -78,7 +82,7 @@
       TabControl,
       GoodsList,
       Scroll,
-      BackTop
+      // BackTop
     },
     created() {
       this.getHomeMultidata();
@@ -86,16 +90,17 @@
       this.getHomeGoods("new");
       this.getHomeGoods("sell");
     },
-
-    mounted() {
-      const refresh = debounce(this.$refs.betscroll.refresh, 200)
-      this.$bus.$on('imgLoad', () => {
-        //再去加载一下srcollHeight的高度
-        // this.$refs.betscroll.refresh()
-        //执行防抖函数
-        refresh()
-      })
-    },
+    //混入（多组件公用一个方法）
+    mixins:[itemListenerMixin,backTopMixin],
+    // mounted() {
+    //   const refresh = debounce(this.$refs.betscroll.refresh, 200)
+    //   this.$bus.$on('imgLoad', () => {
+    //     //再去加载一下srcollHeight的高度
+    //     // this.$refs.betscroll.refresh()
+    //     //执行防抖函数
+    //     refresh()
+    //   })
+    // },
     methods: {
       swiperImageLoad() {
         // console.log(this.$refs.tabControl2.$el.offsetTop)
@@ -116,11 +121,11 @@
 
       },
       //滚动顶部事件
-      backClick() {
+      /*backClick() {
         //防止出现better-scroll未加载就调用refresh()的bug,暂时未出现
         // this.$refs.betscroll.scroll && this.$refs.betscroll.scroll.scrollTo && this.$refs.betscroll.scroll.scrollTo(0, 0,1000)
         this.$refs.betscroll.scroll.scrollTo(0, 0, 1000)
-      },
+      },*/
       itemClick(index) {
         switch (index) {
           case 0:

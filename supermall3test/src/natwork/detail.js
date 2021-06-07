@@ -14,6 +14,7 @@ export class itemGoods {
     this.title = itemInfo.title;
     this.price = itemInfo.price;
     this.oldPrice = itemInfo.oldPrice;
+    this.lowNowPrice = itemInfo.lowNowPrice;
     this.discountDesc = itemInfo.discountDesc;
     this.discountBgColor = itemInfo.discountBgColor;
     this.columns = columns;
@@ -29,4 +30,19 @@ export class Shop {
     this.cSells = shopInfo.cSells;
     this.cGoods = shopInfo.cGoods;
   }
+}
+
+//参数信息
+export class Param {
+  constructor(info, rule) {
+    this.info = info.set;
+    this.rule = rule.tables;
+  }
+}
+
+//请求推荐recommend
+export function getRecommend(){
+  return request({
+    url:'/recommend'
+  })
 }

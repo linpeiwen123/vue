@@ -132,7 +132,26 @@
       this.scroll.on('pullingUp',()=>{
         console.log("上拉刷新");
       })
+
+      let obj = {
+        mtndat:"2011-08-18 14:06:24.0"
+      }
+      this.dateTransform(obj)
+    },
+    methods:{
+      dateTransform(obj){
+        if(obj.mtndat != ""){
+          return obj.mtndat.split(" ")[0]
+        }
+        return ""
+      }
     }
+  }
+  function dateTransform(dateObj) {
+    if(dateObj.mtndat != ""){
+      return dateObj.mtndat.split(" ")[0]
+    }
+    return ""
   }
 </script>
 
